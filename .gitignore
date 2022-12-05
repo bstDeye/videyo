@@ -1,0 +1,21 @@
+.idea
+
+# TypeScript (front)
+*/node_modules
+*/build
+*.map
+
+# Deploy dev
+deploy/environments/local/data
+!deploy/build/
+
+# C# (back)
+.vs
+back/*/bin
+back/*/obj
+
+# Production configuration
+deploy/environments/prod/.env
+deploy/environments/prod/config/front/conf.js
+deploy/environments/prod/config/back/appsettings.json
+front/dist

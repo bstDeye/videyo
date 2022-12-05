@@ -1,0 +1,40 @@
+# Building back
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS builder-back
+WORKDIR /app
+
+COPY back/ExampleApi.sln ./
+COPY back/Core/Example.Api.Core.csproj ./Core/
+COPY back/Abstractions/Example.Api.Abstractions.csproj ./Abstractions/
+COPY back/Db/Example.Api.Db.csproj ./Db/
+COPY back/Adapters/Example.Api.Adapters.csproj ./Adapters/
+COPY back/Web/Example.Api.Web.csproj ./Web/
+
+RUN dotnet restore
+
+
+COPY back .
+RUN dotnet publish -c Release -o out
+
+
+# Building front
+FROM  --platform=linux/amd64 node:16 as builder-front
+
+COPY front/package.json /front/
+COPY front/yarn.lock /front/
+RUN cd /front && yarn
+
+COPY front /front/
+RUN cd /front && yarn build
+
+
+# Running
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS production
+WORKDIR /back
+COPY --from=builder-back /app/out .
+
+COPY --from=builder-front /front/build /back/wwwroot
+ENV FRONT_PATH /back/wwwroot
+
+EXPOSE 4003
+ENTRYPOINT ["dotnet", "Example.Api.Web.dll"]
+

@@ -1,0 +1,43 @@
+$header-size: 3.5rem;
+
+
+.Drawer {
+
+	height: calc(100% - #{$header-size});
+
+
+	main {
+		display: flex;
+		height: 100%;
+	}
+
+	.drawer-btn {
+		margin: 0.5rem 0;
+	}
+
+	.actions {
+		overflow: hidden;
+		user-select: none;
+	}
+
+	.content {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+
+		* > {
+			height: 100%;
+		}
+	}
+
+}
+
+.Drawer-hoc {
+	height: 100vh;
+
+	.header {
+		height: $header-size;
+	}
+}

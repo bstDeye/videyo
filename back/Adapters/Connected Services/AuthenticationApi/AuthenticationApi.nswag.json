@@ -1,0 +1,1364 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Api documentation",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://elyspio.fr/authentication",
+      "description": "production"
+    }
+  ],
+  "paths": {
+    "/api/authentication/app/{app}": {
+      "post": {
+        "tags": [
+          "AuthenticationApp"
+        ],
+        "operationId": "createAppToken",
+        "parameters": [
+          {
+            "name": "app",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AuthenticationApp"
+        ],
+        "operationId": "deleteAppToken",
+        "parameters": [
+          {
+            "name": "app",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token"
+                ],
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "AuthenticationApp"
+        ],
+        "operationId": "getTokens",
+        "parameters": [
+          {
+            "name": "app",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authentication/app/{app}/permanent": {
+      "post": {
+        "tags": [
+          "AuthenticationApp"
+        ],
+        "operationId": "createPermanentAppToken",
+        "parameters": [
+          {
+            "name": "app",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authentication/app/{app}/valid": {
+      "get": {
+        "tags": [
+          "AuthenticationApp"
+        ],
+        "operationId": "validToken",
+        "parameters": [
+          {
+            "name": "app",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token"
+                ],
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authentication/logged": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Return all logged users (Not available in production)",
+        "operationId": "get",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/authentication/login/init": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Login first step: create a salt from user's name",
+        "operationId": "loginInit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostLoginInitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostLoginModelWithSalt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authentication/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Login second step: check if the token provided match with the one computed by the server",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostLoginModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "logout",
+        "parameters": [
+          {
+            "name": "authentication-login",
+            "in": "cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/authentication/valid": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "validToken2",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{username}/authorisations": {
+      "get": {
+        "tags": [
+          "AuthorisationsUsers"
+        ],
+        "operationId": "get2",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "AuthorisationsUsers"
+        ],
+        "operationId": "set",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{username}/credentials": {
+      "get": {
+        "tags": [
+          "CredentialsUsers"
+        ],
+        "operationId": "get3",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CredentialsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CredentialsUsers"
+        ],
+        "operationId": "set2",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{username}/settings": {
+      "patch": {
+        "tags": [
+          "SettingsUsers"
+        ],
+        "operationId": "set3",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetUserSettingsModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "SettingsUsers"
+        ],
+        "operationId": "get4",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSettingsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{username}/settings/theme": {
+      "get": {
+        "tags": [
+          "SettingsUsers"
+        ],
+        "operationId": "getTheme",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "windows_theme",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dark",
+                "light"
+              ]
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrontThemeReturnModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/exist": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "checkIfUsersExist",
+        "responses": {
+          "200": {
+            "description": "If at least one user existe",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{kind}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Return username or token of logged user",
+        "operationId": "getUserInfo",
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "username",
+                "token"
+              ]
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "header",
+            "description": "Authorization in header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authentication-token",
+            "in": "cookie",
+            "description": "Authorization in cookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Username or token of logged user",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not logged",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are missing a required role",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Create an user",
+        "operationId": "addUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddUserModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User's username",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Unauthorized": {
+        "type": "object",
+        "required": [
+          "name",
+          "message",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "default": "UNAUTHORIZED",
+            "minLength": 1,
+            "example": "UNAUTHORIZED"
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
+          },
+          "status": {
+            "type": "number",
+            "description": "The status code of the exception",
+            "default": 401,
+            "example": 401
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of related errors",
+            "items": {
+              "$ref": "#/components/schemas/GenericError"
+            }
+          },
+          "stack": {
+            "type": "string",
+            "description": "The stack trace (only in development mode)"
+          }
+        }
+      },
+      "GenericError": {
+        "type": "object",
+        "required": [
+          "name",
+          "message"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The error name",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "description": "An error message",
+            "minLength": 1
+          }
+        }
+      },
+      "PostLoginModelWithSalt": {
+        "type": "object",
+        "required": [
+          "salt"
+        ],
+        "properties": {
+          "salt": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "PostLoginInitRequest": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "hash": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "PostLoginModel": {
+        "type": "object",
+        "required": [
+          "token"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "minLength": 1
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "PostLoginRequest": {
+        "type": "object",
+        "required": [
+          "hash",
+          "name"
+        ],
+        "properties": {
+          "hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "AuthorizationModel": {
+        "type": "object",
+        "properties": {
+          "authentication": {
+            "$ref": "#/components/schemas/AuthorizationAuthenticationModel"
+          }
+        }
+      },
+      "AuthorizationAuthenticationModel": {
+        "type": "object",
+        "required": [
+          "roles"
+        ],
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "User",
+                "Admin"
+              ]
+            }
+          }
+        }
+      },
+      "CredentialsModel": {
+        "type": "object",
+        "properties": {
+          "docker": {
+            "$ref": "#/components/schemas/DockerModel"
+          },
+          "github": {
+            "$ref": "#/components/schemas/GithubModel"
+          }
+        }
+      },
+      "DockerModel": {
+        "type": "object",
+        "required": [
+          "password",
+          "username"
+        ],
+        "properties": {
+          "password": {
+            "type": "string",
+            "minLength": 1
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "GithubModel": {
+        "type": "object",
+        "required": [
+          "token",
+          "user"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "minLength": 1
+          },
+          "user": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "SetUserSettingsModel": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "system",
+              "dark"
+            ]
+          }
+        }
+      },
+      "UserSettingsModel": {
+        "type": "object",
+        "required": [
+          "theme"
+        ],
+        "properties": {
+          "theme": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "light",
+              "system",
+              "dark"
+            ]
+          }
+        }
+      },
+      "FrontThemeReturnModel": {
+        "type": "object",
+        "required": [
+          "theme"
+        ],
+        "properties": {
+          "theme": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "dark",
+              "light"
+            ]
+          }
+        }
+      },
+      "AddUserModel": {
+        "type": "object",
+        "required": [
+          "hash",
+          "username"
+        ],
+        "properties": {
+          "hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "AuthenticationApp"
+    },
+    {
+      "name": "Authentication"
+    },
+    {
+      "name": "AuthorisationsUsers"
+    },
+    {
+      "name": "CredentialsUsers"
+    },
+    {
+      "name": "SettingsUsers"
+    },
+    {
+      "name": "Users"
+    }
+  ]
+}

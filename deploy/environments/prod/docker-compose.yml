@@ -1,0 +1,27 @@
+version: "3"
+services:
+    react-api-template:
+        container_name: "react-api-template"
+        image: elyspio/react-api-template
+        volumes:
+            - "./config/front/conf.js:/back/wwwroot/conf.js"
+            - "./config/back/appsettings.json:/back/appsettings.json"
+        networks:
+            - external
+            - internal
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=external"
+            - "traefik.http.middlewares.react-api-template-prefix.stripprefix.prefixes=/react-api-template"
+            - "traefik.http.routers.react-api-template.middlewares=react-api-template-prefix@docker"
+            - "traefik.http.routers.react-api-template.rule=PathPrefix(`/react-api-template`)"
+            - "traefik.http.services.react-api-template.loadbalancer.server.port=4000"
+            - "traefik.http.routers.react-api-template.entrypoints=external"
+
+
+
+networks:
+    internal:
+        external: true
+    external:
+        external: true
