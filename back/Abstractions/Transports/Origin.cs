@@ -1,5 +1,9 @@
 ﻿namespace Example.Api.Abstractions.Transports;
 
+
+/**
+ * Carte d'identité d'une vidéo avec : l'URL, l'application d'origine ainsi que les presonnes à créditer
+ */
 public class Origin
 {
     public required Uri Url { get; init; }

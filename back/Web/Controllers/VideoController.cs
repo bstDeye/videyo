@@ -1,6 +1,5 @@
 ﻿using Example.Api.Abstractions.Interfaces.Services;
 using Example.Api.Abstractions.Transports;
-using Example.Api.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Net;

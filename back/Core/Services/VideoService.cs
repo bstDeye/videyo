@@ -1,6 +1,5 @@
 ﻿using Example.Api.Abstractions.Interfaces.Repositories;
 using Example.Api.Abstractions.Interfaces.Services;
-using Example.Api.Abstractions.Models;
 using Example.Api.Abstractions.Transports;
 using Example.Api.Core.Assemblers;
 using Microsoft.Extensions.Logging;
@@ -29,11 +28,8 @@ namespace Example.Api.Core.Services
 
 		public async Task<List<Video>> GetAll()
 		{
-
-			var videos = await _videoRepository.GetAll();
-			return _videoAssembler.Convert(videos);
-
-
+			var entity = await _videoRepository.GetAll();
+			return _videoAssembler.Convert(entity);
 		}
 	}
 }
