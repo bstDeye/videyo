@@ -14,8 +14,7 @@ namespace Example.Api.Core.Assemblers
 				Id = obj.Id.AsGuid(),
 				LikedVideos = obj.LikedVideos,
 				Username = obj.Username,
-				Password = obj.Password,
-				PlaylistIds = obj.PlaylistIds,
+				Playlists = obj.Playlists,
 				SentComments = obj.SentComments
 			};
 		}
@@ -27,8 +26,7 @@ namespace Example.Api.Core.Assemblers
 				Id = obj.Id.AsObjectId(),
 				LikedVideos = obj.LikedVideos,
 				Username = obj.Username,
-				Password = obj.Password,
-				PlaylistIds = obj.PlaylistIds,
+				Playlists = obj.Playlists,
 				SentComments = obj.SentComments
 			};
 		}

@@ -8,7 +8,6 @@ namespace Example.Api.Core.Services
 {
 	public class VideoService : IVideoService
 	{
-		private readonly string defaultUser = "public";
 		private readonly ILogger<VideoService> logger;
 		private readonly VideoAssembler _videoAssembler = new();
 		private readonly IVideoRepository _videoRepository;

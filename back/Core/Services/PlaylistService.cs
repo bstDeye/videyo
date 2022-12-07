@@ -8,7 +8,6 @@ namespace Example.Api.Core.Services
 {
 	public class PlaylistService : IPlaylistService
 	{
-		private readonly string defaultUser = "public";
 		private readonly ILogger<PlaylistService> logger;
 		private readonly PlaylistAssembler _playlistAssembler = new();
 		private readonly IPlaylistRepository _playlistRepository;

@@ -8,7 +8,6 @@ namespace Example.Api.Core.Services
 {
 	public class UserService : IUserService
 	{
-		private readonly string defaultUser = "public";
 		private readonly ILogger<UserService> logger;
 		private readonly UserAssembler _userAssembler = new();
 		private readonly IUserRepository _userRepository;
@@ -23,6 +22,11 @@ namespace Example.Api.Core.Services
 		{
 			var entity = await _userRepository.Add(user);
 			return _userAssembler.Convert(entity);
+		}
+
+		public async Task<User> Like(Guid VideoId)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
