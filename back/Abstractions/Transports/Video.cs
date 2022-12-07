@@ -2,7 +2,7 @@
 
 namespace Example.Api.Abstractions.Transports
 {
-	public class Todo : TodoBase
+	public class Video : VideoBase
 	{
 		[Required] public required Guid Id { get; init; }
 	}

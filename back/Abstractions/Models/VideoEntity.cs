@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Example.Api.Abstractions.Models
 {
-	public class TodoEntity : TodoBase
+	public class VideoEntity : VideoBase
 	{
 		[BsonId]
 		[BsonRepresentation(BsonType.ObjectId)]
