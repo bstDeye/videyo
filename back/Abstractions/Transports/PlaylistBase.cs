@@ -4,7 +4,7 @@
     {
         public required string Label { get; init; }
 
-        public required List<Video> Videos { get; init; }
+        public required List<Guid> IdVideos { get; init; }
 
         public required string User { get; init; }
         

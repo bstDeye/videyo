@@ -15,7 +15,7 @@ namespace Example.Api.Core.Assemblers
 				Label = obj.Label,
 				User = obj.User,
 				Origin = obj.Origin,
-				Commentaires = obj.Commentaires,
+				Comments = obj.Comments,
 			};
 		}
 
@@ -27,7 +27,7 @@ namespace Example.Api.Core.Assemblers
 				Label = obj.Label,
 				User = obj.User,
 				Origin = obj.Origin,
-				Commentaires = obj.Commentaires,
+				Comments = obj.Comments,
 			};
 		}
 	}

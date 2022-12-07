@@ -15,7 +15,7 @@ namespace Example.Api.Core.Assemblers
 				Label = obj.Label,
 				User = obj.User,
 				Type = obj.Type,
-				Videos = obj.Videos
+				IdVideos = obj.IdVideos
 			};
 		}
 
@@ -27,7 +27,7 @@ namespace Example.Api.Core.Assemblers
 				Label = obj.Label,
 				User = obj.User,
 				Type = obj.Type,
-				Videos = obj.Videos,
+				IdVideos = obj.IdVideos,
 			};
 		}
 	}

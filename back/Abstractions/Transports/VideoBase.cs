@@ -6,7 +6,7 @@
 
         public required Origin Origin { get; init; }
 
-        public required List<Commentaire> Commentaires { get; init; }
+        public required List<Commentaire> Comments  { get; init; }
 
         public required string User { get; init; }
         
