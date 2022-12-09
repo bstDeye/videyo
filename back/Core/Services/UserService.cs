@@ -14,7 +14,7 @@ namespace Example.Api.Core.Services
 
 		public UserService(IUserRepository userRepository, ILogger<UserService> logger)
 		{
-			this._userRepository = userRepository;
+			_userRepository = userRepository;
 			this.logger = logger;
 		}
 
@@ -23,10 +23,6 @@ namespace Example.Api.Core.Services
 			var entity = await _userRepository.Add(user);
 			return _userAssembler.Convert(entity);
 		}
-
-		public async Task<User> Like(Guid VideoId)
-		{
-			throw new NotImplementedException();
-		}
+		
 	}
 }

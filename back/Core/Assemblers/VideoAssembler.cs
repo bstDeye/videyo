@@ -16,6 +16,7 @@ namespace Example.Api.Core.Assemblers
 				User = obj.User,
 				Origin = obj.Origin,
 				Comments = obj.Comments,
+				NbLikes = obj.NbLikes,
 			};
 		}
 
@@ -28,6 +29,8 @@ namespace Example.Api.Core.Assemblers
 				User = obj.User,
 				Origin = obj.Origin,
 				Comments = obj.Comments,
+				NbLikes = obj.NbLikes,
+				
 			};
 		}
 	}

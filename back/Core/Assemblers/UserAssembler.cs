@@ -15,7 +15,6 @@ namespace Example.Api.Core.Assemblers
 				LikedVideos = obj.LikedVideos,
 				Username = obj.Username,
 				Playlists = obj.Playlists,
-				SentComments = obj.SentComments
 			};
 		}
 
@@ -27,7 +26,6 @@ namespace Example.Api.Core.Assemblers
 				LikedVideos = obj.LikedVideos,
 				Username = obj.Username,
 				Playlists = obj.Playlists,
-				SentComments = obj.SentComments
 			};
 		}
 	}

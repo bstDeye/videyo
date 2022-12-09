@@ -7,5 +7,8 @@ namespace Example.Api.Abstractions.Interfaces.Repositories
 	{
 		Task<PlaylistEntity> Add(PlaylistBase playlist);
 		Task<List<PlaylistEntity>> GetAll();
+		Task AddVideoToPlayList(Guid idVideo, Guid idPlaylist, Guid idUser);
+		Task RemoveVideoFromPlaylist(Guid idVideo , Guid idPlaylist, Guid idUser);
+		
 	}
 }

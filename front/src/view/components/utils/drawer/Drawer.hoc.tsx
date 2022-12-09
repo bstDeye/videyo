@@ -38,7 +38,7 @@ export function withDrawer({ component, title, actions }: WithDrawerProps) {
 				</Grid>
 			</Paper>
 
-			<Drawer position={"right"} actionsComponent={<Actions elements={actions} />}>
+			<Drawer position={"left"} actionsComponent={<Actions elements={actions} />}>
 				<div className="content">{component}</div>
 			</Drawer>
 		</Box>

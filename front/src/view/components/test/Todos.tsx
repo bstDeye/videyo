@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper } from "@mui/material";
+import {Box, Container, Grid, Paper, Stack, Typography} from "@mui/material";
 import "./Test.scss";
 import * as React from "react";
 import { Todo } from "./todo/Todo";
@@ -10,15 +10,14 @@ export const Todos = () => {
 		<Container className={"Test"}>
 			<Paper>
 				<Box p={2}>
-					<Grid container spacing={2}>
-						<Grid item xs={true}>
-							<Todo mode={"public"} />
-						</Grid>
-						{logged && <Grid item xs={6}>
-							<Todo mode={"user"} />
-						</Grid>}
-
-					</Grid>
+					<Stack>
+						<Typography>Blabla</Typography>
+						<Typography>Blabla</Typography>
+						<Typography>Blabla</Typography>
+						<Typography>Blabla</Typography>
+						<Typography>Blabla</Typography>
+						<Typography>Blabla</Typography>
+					</Stack>
 				</Box>
 			</Paper>
 		</Container>
