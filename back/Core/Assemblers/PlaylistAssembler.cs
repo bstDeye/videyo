@@ -14,7 +14,6 @@ namespace Example.Api.Core.Assemblers
 				Id = obj.Id.AsGuid(),
 				Label = obj.Label,
 				User = obj.User,
-				Type = obj.Type,
 				IdVideos = obj.IdVideos
 			};
 		}
@@ -26,7 +25,6 @@ namespace Example.Api.Core.Assemblers
 				Id = obj.Id.AsObjectId(),
 				Label = obj.Label,
 				User = obj.User,
-				Type = obj.Type,
 				IdVideos = obj.IdVideos,
 			};
 		}

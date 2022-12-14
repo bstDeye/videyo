@@ -8,14 +8,7 @@
 
         public required string User { get; init; }
         
-        public required Type Type { get; init; }
         
     }
-
-
-    public enum Type
-    {
-        UserPlaylist,
-        CategoryPlaylist
-    }
+    
 }

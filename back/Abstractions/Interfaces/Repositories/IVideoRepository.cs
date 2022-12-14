@@ -9,7 +9,6 @@ namespace Example.Api.Abstractions.Interfaces.Repositories
 		Task<List<VideoEntity>> GetAll();
 		Task AddLike(Guid idVideo);
 		Task Removelike(Guid idVideo);
-
-		Task Comment(Guid idVideo, Guid idComment, Guid userId);
+		Task Comment(Guid idVideo, string content, string userId);
 	}
 }

@@ -6,7 +6,7 @@ public class UserBase
     /// <summary>
     /// Les playlistes suivies par cet utilisateur
     /// </summary>
-    public required List<Guid> Playlists { get; init; }
+    public required List<UserPlaylist> Playlists { get; init; }
         
     public required List<Guid> LikedVideos { get; init; }
     
