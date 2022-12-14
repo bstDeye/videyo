@@ -11,6 +11,7 @@ import { login, logout, silentLogin } from "../../store/module/authentication/au
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
+	Accessibility,
 	AcUnit,
 	AddBox,
 	DarkMode,
@@ -23,6 +24,7 @@ import {NavMenu} from "./navigation/NavMenu";
 import {NavBar} from "./navigation/NavBar";
 import { PersistentDrawerLeft} from "./utils/drawer/Drawer2";
 import {DrawerAction} from "./utils/drawer/drawer.constantes";
+import {MainPage} from "./MainPage";
 
 function Application() {
 	const dispatch = useAppDispatch();
@@ -45,13 +47,18 @@ function Application() {
 			icon: <SentimentSatisfiedAlt/>,
 			onClick: storeActions.toggleTheme,
 			label: "Face",
+		},
+		{
+			icon: <Accessibility/>,
+			onClick: storeActions.toggleTheme,
+			label: "Body",
 		}
 	];
 
 	return (
 		<Box className={"Application"} >
-			<PersistentDrawerLeft title={"Hebdrawmadaire"} actions={actions}>
-				<Todos />
+			<PersistentDrawerLeft title={"Videyo"} actions={actions}>
+				<MainPage />
 			</PersistentDrawerLeft>
 
 		</Box>

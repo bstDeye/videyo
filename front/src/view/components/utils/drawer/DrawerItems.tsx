@@ -10,7 +10,7 @@ interface DrawerItemsProps {
     action: DrawerAction
 }
 
-function DrawerItems({title, category, action}: DrawerItemsProps) {
+export function DrawerItems({title, category, action}: DrawerItemsProps) {
     const [open, setOpen] = React.useState("");
 
     const handleClick = () => {
@@ -49,4 +49,3 @@ function DrawerItems({title, category, action}: DrawerItemsProps) {
     );
 }
 
-export default DrawerItems;

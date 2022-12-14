@@ -7,7 +7,7 @@ export function AddVideoButton() {
 
     return (
         <IconButton>
-            <Add/>
+            <Add fill={"#FFFFFF"}/>
         </IconButton>
     );
 }

@@ -18,7 +18,7 @@ export class BackendApi {
 		user: new TodoUserClient(window.config.endpoints.core),
 	};
 
-	public readonly video = {
-		common:
-	}
+	// public readonly video = {
+	// 	common:
+	// }
 }

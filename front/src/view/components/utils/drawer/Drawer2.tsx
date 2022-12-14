@@ -4,25 +4,15 @@ import {styled, useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import {ActionComponentProps, ActionDescriptionProps} from "./actions/Action";
-import DrawerItems from "./DrawerItems";
 import {DrawerAppBar} from "./DrawerAppBar";
 import {DrawerAction} from "./drawer.constantes";
+import {DrawerItems} from "./DrawerItems";
 
 const drawerWidth = 240;
 
@@ -106,7 +96,7 @@ export function PersistentDrawerLeft({children, title, actions}: DrawerProps) {
                         //         <ListItemText primary={action.label}/>
                         //     </ListItemButton>
                         // </ListItem>
-                        <DrawerItems title={""} category={"Head"} action={action}/>
+                        <DrawerItems key={index} title={""} category={"Head"} action={action}/>
 
                     ))}
                 </List>
