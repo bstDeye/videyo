@@ -1,5 +1,5 @@
 ﻿using Example.Api.Abstractions.Models;
-using Example.Api.Abstractions.Transports;
+using Example.Api.Abstractions.Transports.Playlist;
 
 namespace Example.Api.Abstractions.Interfaces.Repositories
 {
@@ -7,8 +7,10 @@ namespace Example.Api.Abstractions.Interfaces.Repositories
 	{
 		Task<PlaylistEntity> Add(PlaylistBase playlist);
 		Task<List<PlaylistEntity>> GetAll();
-		Task AddVideoToPlayList(Guid idVideo, Guid idPlaylist, Guid idUser);
-		Task RemoveVideoFromPlaylist(Guid idVideo , Guid idPlaylist, Guid idUser);
-		
+		Task AddVideoToPlayList(Guid idPlaylist, Guid idVideo);
+		Task AddVideoToLiked(Guid idUser, Guid idVideo);
+		Task RemoveVideoFromPlaylist(Guid idPlaylist, Guid idVideo);
+		Task RemoveVideoFromLiked(Guid idUser, Guid idVideo);
+
 	}
 }

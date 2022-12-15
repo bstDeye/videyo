@@ -12,7 +12,6 @@ namespace Example.Api.Core.Assemblers
 			return new User
 			{
 				Id = obj.Id.AsGuid(),
-				LikedVideos = obj.LikedVideos,
 				Username = obj.Username,
 				Playlists = obj.Playlists,
 			};
@@ -23,7 +22,6 @@ namespace Example.Api.Core.Assemblers
 			return new UserEntity
 			{
 				Id = obj.Id.AsObjectId(),
-				LikedVideos = obj.LikedVideos,
 				Username = obj.Username,
 				Playlists = obj.Playlists,
 			};

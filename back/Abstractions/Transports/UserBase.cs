@@ -1,4 +1,6 @@
-﻿namespace Example.Api.Abstractions.Transports;
+﻿using Example.Api.Abstractions.Transports.Playlist;
+
+namespace Example.Api.Abstractions.Transports;
 
 public class UserBase
 {
@@ -8,6 +10,6 @@ public class UserBase
     /// </summary>
     public required List<UserPlaylist> Playlists { get; init; }
         
-    public required List<Guid> LikedVideos { get; init; }
     
 }
+

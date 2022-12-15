@@ -3,6 +3,7 @@ using Example.Api.Abstractions.Transports;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Net;
+using Example.Api.Abstractions.Transports.Playlist;
 using Microsoft.AspNetCore.Http.HttpResults;
 using ZstdSharp.Unsafe;
 
@@ -62,7 +63,7 @@ namespace Example.Api.Web.Controllers
 		[SwaggerResponse(HttpStatusCode.NoContent, typeof(Playlist))]
 		public async Task<IActionResult> AddToPlaylist(Guid idVideo, Guid idPlaylist, Guid idUser)
 		{
-			await _videoService.AddToPlayList(idVideo, idPlaylist, idUser );
+			await _videoService.AddToPlayList(idVideo, idPlaylist );
 			return NoContent();
 		}
 		

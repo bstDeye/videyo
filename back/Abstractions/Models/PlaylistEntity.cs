@@ -1,4 +1,5 @@
 ﻿using Example.Api.Abstractions.Transports;
+using Example.Api.Abstractions.Transports.Playlist;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 

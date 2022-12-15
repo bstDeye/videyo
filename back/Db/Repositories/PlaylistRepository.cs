@@ -1,9 +1,13 @@
-﻿using Example.Api.Abstractions.Interfaces.Repositories;
+﻿using Example.Api.Abstractions.Extensions;
+using Example.Api.Abstractions.Interfaces.Repositories;
 using Example.Api.Abstractions.Models;
 using Example.Api.Abstractions.Transports;
+using Example.Api.Abstractions.Transports.Playlist;
 using Example.Api.Db.Repositories.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Example.Api.Db.Repositories;
 
@@ -20,6 +24,7 @@ public class PlaylistRepository :BaseRepository<PlaylistEntity>, IPlaylistReposi
             Label = playlist.Label,
             IdVideos = playlist.IdVideos,
             User = playlist.User,
+            Type = playlist.Type,
         };
 
         await EntityCollection.InsertOneAsync(entity);
@@ -29,18 +34,33 @@ public class PlaylistRepository :BaseRepository<PlaylistEntity>, IPlaylistReposi
 
     public async Task<List<PlaylistEntity>> GetAll()
     {
-        throw new NotImplementedException();
+        return await EntityCollection.AsQueryable().ToListAsync();
     }
 
-    public async Task AddVideoToPlayList(Guid idVideo, Guid idPlaylist, Guid idUser)
+    public async Task AddVideoToPlayList(Guid idPlaylist, Guid idVideo)
     {
-        throw new NotImplementedException();
+        var update = Builders<PlaylistEntity>.Update.Push(p => p.IdVideos, idVideo);
+        var filter = Builders<PlaylistEntity>.Filter.Eq(p => p.Id, idPlaylist.AsObjectId());
+        await EntityCollection.UpdateOneAsync(filter, update);
+
     }
 
-    public async Task RemoveVideoFromPlaylist(Guid idVideo, Guid idPlaylist, Guid idUser)
+    public async Task AddVideoToLiked(Guid idUser, Guid idVideo)
     {
-        throw new NotImplementedException();
+        var playlist = await EntityCollection.AsQueryable().Where(p => p.User == idUser && p.Type == PlaylistType.Liked).FirstOrDefaultAsync();
+        await AddVideoToPlayList(playlist.Id.AsGuid(), idVideo);
     }
 
+    public async Task RemoveVideoFromPlaylist(Guid idPlaylist, Guid idVideo)
+    {
+        var update = Builders<PlaylistEntity>.Update.Pull(p => p.IdVideos, idVideo);
+        var filter = Builders<PlaylistEntity>.Filter.Eq(p => p.Id, idPlaylist.AsObjectId());
+        await EntityCollection.UpdateOneAsync(filter, update);
+    }
+    public async Task RemoveVideoFromLiked(Guid idUser, Guid idVideo)
+    {
+        var playlist = await EntityCollection.AsQueryable().Where(p => p.User == idUser && p.Type == PlaylistType.Liked).FirstOrDefaultAsync();
+        await RemoveVideoFromPlaylist(playlist.Id.AsGuid(), idVideo);
+    }
 
 }

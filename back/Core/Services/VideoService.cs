@@ -39,23 +39,25 @@ namespace Example.Api.Core.Services
 		public async Task AddLike(Guid idVideo, Guid idUser)
 		{
 			await _videoRepository.AddLike(idVideo);
-			await _userRepository.Like(idUser, idVideo);
+			await _userRepository.Like(idUser);
+			await _playlistRepository.AddVideoToLiked(idUser, idVideo);
 		}
 
 		public async Task Removelike(Guid idVideo, Guid idUser)
 		{
 			await _videoRepository.Removelike(idVideo);
-			await _userRepository.DisLike(idUser, idVideo);
+			await _userRepository.DisLike(idUser);
+			await _playlistRepository.RemoveVideoFromLiked(idUser, idVideo);
 		}
 
-		public async Task AddToPlayList(Guid idVideo, Guid idPlaylist, Guid idUser)
+		public async Task AddToPlayList(Guid idVideo, Guid idPlaylist)
 		{
-			await _playlistRepository.AddVideoToPlayList(idVideo, idPlaylist, idUser);
+			await _playlistRepository.AddVideoToPlayList(idPlaylist, idVideo);
 		}
 
 		public async Task RemoveFromPlaylist(Guid idVideo, Guid idPlaylist, Guid idUser)
 		{
-			await _playlistRepository.RemoveVideoFromPlaylist(idVideo, idPlaylist, idUser);
+			await _playlistRepository.RemoveVideoFromPlaylist(idPlaylist, idVideo);
 		}
 	}
 }

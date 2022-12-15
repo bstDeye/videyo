@@ -4,6 +4,7 @@ using Example.Api.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Net;
+using Example.Api.Abstractions.Transports.Playlist;
 
 namespace Example.Api.Web.Controllers
 {

@@ -2,6 +2,7 @@
 using Example.Api.Abstractions.Extensions;
 using Example.Api.Abstractions.Models;
 using Example.Api.Abstractions.Transports;
+using Example.Api.Abstractions.Transports.Playlist;
 
 namespace Example.Api.Core.Assemblers
 {
@@ -14,7 +15,8 @@ namespace Example.Api.Core.Assemblers
 				Id = obj.Id.AsGuid(),
 				Label = obj.Label,
 				User = obj.User,
-				IdVideos = obj.IdVideos
+				IdVideos = obj.IdVideos,
+				Type = obj.Type
 			};
 		}
 
@@ -26,6 +28,7 @@ namespace Example.Api.Core.Assemblers
 				Label = obj.Label,
 				User = obj.User,
 				IdVideos = obj.IdVideos,
+				Type = obj.Type,
 			};
 		}
 	}

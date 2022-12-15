@@ -1,6 +1,7 @@
 ﻿using Example.Api.Abstractions.Interfaces.Repositories;
 using Example.Api.Abstractions.Interfaces.Services;
 using Example.Api.Abstractions.Transports;
+using Example.Api.Abstractions.Transports.Playlist;
 using Example.Api.Core.Assemblers;
 using Microsoft.Extensions.Logging;
 

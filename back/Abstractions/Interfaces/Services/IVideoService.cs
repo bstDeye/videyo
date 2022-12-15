@@ -8,7 +8,7 @@ namespace Example.Api.Abstractions.Interfaces.Services
 		Task<List<Video>> GetAll();
 		Task AddLike(Guid idVideo, Guid idUser);
 		Task Removelike(Guid idVideo, Guid idUser);
-		Task AddToPlayList(Guid idVideo, Guid idPlaylist, Guid idUser);
+		Task AddToPlayList(Guid idVideo, Guid idPlaylist);
 		Task RemoveFromPlaylist(Guid idVideo , Guid playlistId, Guid userId);
 
 
