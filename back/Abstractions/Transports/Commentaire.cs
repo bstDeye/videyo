@@ -8,7 +8,7 @@ namespace Example.Api.Abstractions.Transports
 		
 		public required  Guid AnsweredTo { get; set; }
 		
-		public required string Text { get; init; }
+		public required string Text { get; set; }
 
 		public required string User { get; init; }
         

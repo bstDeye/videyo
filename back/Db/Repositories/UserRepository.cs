@@ -44,14 +44,29 @@ public class UserRepository : BaseRepository<UserEntity>,IUserRepository
         await EntityCollection.ReplaceOneAsync(v => v.Id == user.Id, user);
     }
 
-    public async Task FollowPlaylist(Guid idUser, Guid idPlaylist)
+    public async Task FollowPlaylist(Guid idUser, Playlist playlist) 
     {
-        throw new NotImplementedException();
+        var author = await EntityCollection.AsQueryable().FirstOrDefaultAsync(u => u.Id == playlist.User.AsObjectId());
+        var userPlaylist = new UserPlaylist
+        {
+            Id = playlist.Id,
+            Label = playlist.Label,
+            Author = author.Username,
+            NbVideo = playlist.IdVideos.Count,
+            Type = PlaylistType.Custom
+        };
+        
+        var update = Builders<UserEntity>.Update.Push(u => u.Playlists, userPlaylist) ;
+        await EntityCollection.UpdateOneAsync(u => u.Id == idUser.AsObjectId(), update);
+        
     }
 
     public async Task UnFollowPlaylist(Guid idUser, Guid idPlaylist)
     {
-        throw new NotImplementedException();
+        //syntaxe mongoDb
+        var update = Builders<UserEntity>.Update.PullFilter(u => u.Playlists, playlist => playlist.Id == idPlaylist) ;
+        await EntityCollection.UpdateOneAsync(u => u.Id == idUser.AsObjectId(), update);
+        
     }
 
    

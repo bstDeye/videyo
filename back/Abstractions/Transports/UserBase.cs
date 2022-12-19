@@ -8,7 +8,7 @@ public class UserBase
     /// <summary>
     /// Les playlistes suivies par cet utilisateur
     /// </summary>
-    public required List<UserPlaylist> Playlists { get; init; }
+    public required List<UserPlaylist> Playlists { get; set; }
         
     
 }
