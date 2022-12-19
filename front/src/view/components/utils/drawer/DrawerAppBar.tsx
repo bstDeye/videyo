@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import {styled} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar/AppBar";
+import { More } from "@mui/icons-material";
+import { VideoModal } from "../../videoForm/VideoModal";
 
 const drawerWidth = 240;
 interface AppBarProps extends MuiAppBarProps {
@@ -36,6 +38,9 @@ interface DrawerAppBarProps {
 }
 
 export function DrawerAppBar({handleDrawer, title, open}: DrawerAppBarProps) {
+
+
+
     return (
         <AppBar position="fixed" open={open}>
             <Toolbar>
@@ -50,6 +55,7 @@ export function DrawerAppBar({handleDrawer, title, open}: DrawerAppBarProps) {
                 <Typography variant="h6" noWrap component="div">
                     {title}
                 </Typography>
+                <VideoModal/>
             </Toolbar>
         </AppBar>
     );
