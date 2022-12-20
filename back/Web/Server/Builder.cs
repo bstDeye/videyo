@@ -69,6 +69,7 @@ namespace Example.Api.Web.Server
 					{
 						o.Conventions.Add(new ControllerDocumentationConvention());
 						o.OutputFormatters.RemoveType<StringOutputFormatter>();
+						o.Filters.Add<Machin>();
 					}
 				)
 				.AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))

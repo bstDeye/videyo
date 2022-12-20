@@ -6,7 +6,7 @@ using NSwag.Annotations;
 
 namespace Example.Api.Web.Controllers
 {
-	[Route("api/videos")]
+	[Route("api/user")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{
@@ -18,7 +18,8 @@ namespace Example.Api.Web.Controllers
 		}
 		[HttpPost]
 		[SwaggerResponse(HttpStatusCode.OK, typeof(User))]
-		public async Task<IActionResult> Add([FromBody] UserBase user)
+		[SwaggerResponse(HttpStatusCode.Conflict, typeof(void))]
+		public async Task<IActionResult> Add([FromBody] string user)
 		{
 			return Ok(await _userService.Add(user));
 		}

@@ -6,7 +6,10 @@ namespace Example.Api.Abstractions.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        Task<UserEntity> Add(UserBase user);
+
+        Task<UserEntity> InitDefaultPlaylist(string user, Playlist created, Playlist liked);
+        
+        Task<UserEntity> Add(string user);
         Task Like(Guid user);
         Task DisLike(Guid idUser);
         Task FollowPlaylist(Guid idUser, Playlist playlist);

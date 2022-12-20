@@ -1,6 +1,6 @@
 ﻿namespace Example.Api.Abstractions.Transports.Playlist
 {
-    public abstract class PlaylistBase
+    public class PlaylistBase
     {
         public required string Label { get; init; }
 
