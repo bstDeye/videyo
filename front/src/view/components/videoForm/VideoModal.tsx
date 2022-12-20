@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactChild } from "react";
 import {
 	Box,
 	Button, Dialog, DialogActions, DialogContent, DialogTitle,
@@ -9,7 +9,7 @@ import {
 	Modal,
 	Select,
 	SelectChangeEvent,
-	Stack,
+	Stack, TextField,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { More } from "@mui/icons-material";
@@ -34,20 +34,35 @@ export function VideoModal({}: VideoFormProps) {
 	const [formValues, setFormValues] = React.useState({
 
 		media: "",
-		categorie: "",
-
+		category: "",
 
 	});
 
-	const handleChange = (event: SelectChangeEvent) => {
-		const { name, value } = event.target;
-		setFormValues((current) => {
+	const [textFieldState, setTextFieldStateState] = React.useState({
+		title: "",
+		link:"",
+		credits:""
+	})
+
+
+	const handleSelectChange = (name: keyof typeof formValues)  =>  (event: SelectChangeEvent) => {
+		setFormValues((prevState) => {
 			return {
-				...current,
-				[name]: value,
+				...prevState,
+				[name]: event.target.value,
 			};
 		});
 	};
+
+	const handleTextFieldChange= (name: keyof typeof textFieldState)  =>  (event: React.ChangeEvent<HTMLInputElement>) => {
+		setTextFieldStateState((prevState) => {
+			return {
+				...prevState,
+				[name]: event.target.value,
+			};
+		});
+	};
+
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -72,7 +87,7 @@ export function VideoModal({}: VideoFormProps) {
 							<Select
 								value={formValues.media}
 								label="Media"
-								onChange={handleChange}
+								onChange={handleSelectChange("media")}
 								required
 
 							>
@@ -84,22 +99,35 @@ export function VideoModal({}: VideoFormProps) {
 							<FormHelperText>Media d'origine de la vidéo</FormHelperText>
 						</FormControl>
 						<FormControl fullWidth>
-							<InputLabel>Catégorie</InputLabel>
+							<InputLabel>Category</InputLabel>
 							<Select
-								value={formValues.categorie}
+								value={formValues.category}
 								label="Categorie"
-								onChange={handleChange}
+								onChange={handleSelectChange("category")}
 								required
 
 							>
-								<MenuItem value={"Cheveux"}>Cheveux</MenuItem>
-								<MenuItem value={"Visage"}>Visage</MenuItem>
-								<MenuItem value={"Corps"}>Corps</MenuItem>
-								<MenuItem value={"Creature"}>Créature</MenuItem>
-								<MenuItem value={"Autre"}>Autre</MenuItem>
+								<MenuItem value={"Hair"}>Hair</MenuItem>
+								<MenuItem value={"Face"}>Face</MenuItem>
+								<MenuItem value={"Body"}>Body</MenuItem>
+								<MenuItem value={"Creature"}>Creature</MenuItem>
+								<MenuItem value={"Other"}>Other</MenuItem>
 							</Select>
 							<FormHelperText>Type de contenu</FormHelperText>
+
 						</FormControl>
+						<TextField
+							onChange={handleTextFieldChange("title")}
+							value={textFieldState.title}
+							label={"Title"} />
+						<TextField
+							onChange={handleTextFieldChange("link")}
+							value={textFieldState.link}
+							label={"Link"} />
+						<TextField
+							onChange={handleTextFieldChange("credits")}
+							value={textFieldState.credits}
+							label={"Credits"} />
 					</Stack>
 				</DialogContent>
 				<DialogActions>
