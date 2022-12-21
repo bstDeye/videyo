@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Net;
 using Example.Api.Abstractions.Transports.Playlist;
+using Example.Api.Web.Filters;
 using Microsoft.AspNetCore.Http.HttpResults;
 using ZstdSharp.Unsafe;
 
@@ -34,13 +35,15 @@ namespace Example.Api.Web.Controllers
 		[Route("add")]
 
 		[SwaggerResponse(HttpStatusCode.OK, typeof(Video))]
+		[RequireAuth]
 		public async Task<IActionResult> Add([FromBody] VideoBase video, Guid idUser)
 		{
 			return Ok(await _videoService.Add(video, idUser));
 		}
 
 		[HttpPost]
-		[Route("add-like")]
+		[Route("like")]
+		[RequireAuth]
 		[SwaggerResponse(HttpStatusCode.NoContent, typeof(Video))]
 		public async Task<IActionResult> AddLike(Guid idVideo, Guid idUser)
 		{
@@ -50,7 +53,8 @@ namespace Example.Api.Web.Controllers
 		
 		
 		[HttpDelete]
-		[Route("remove-like")]
+		[Route("like")]
+		[RequireAuth]
 		[SwaggerResponse(HttpStatusCode.NoContent,typeof(Video))]
 		public async Task<IActionResult> RemoveLike(Guid idVideo, Guid idUser)
 		{
@@ -59,7 +63,7 @@ namespace Example.Api.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("add-to-playlist")]
+		[Route("to-playlist")]
 		[SwaggerResponse(HttpStatusCode.NoContent, typeof(Playlist))]
 		public async Task<IActionResult> AddToPlaylist(Guid idVideo, Guid idPlaylist, Guid idUser)
 		{
@@ -68,7 +72,7 @@ namespace Example.Api.Web.Controllers
 		}
 		
 		[HttpDelete]
-		[Route("remove-from-playlist")]
+		[Route("from-playlist")]
 		[SwaggerResponse(HttpStatusCode.NoContent, typeof(Playlist))]
 		public async Task<IActionResult> RemoveFromPlaylist(Guid idVideo, Guid idPlaylist, Guid idUser)
 		{

@@ -1,6 +1,6 @@
 ﻿namespace Example.Api.Abstractions.Transports
 {
-    public abstract class VideoBase
+    public class VideoBase
     {
         public required string Label { get; init; }
         public required Origin Origin { get; init; }

@@ -8,6 +8,9 @@ import MuiAppBar from "@mui/material/AppBar";
 import {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar/AppBar";
 import { More } from "@mui/icons-material";
 import { VideoModal } from "../../videoForm/VideoModal";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { useAppDispatch } from "../../../../store";
+import { login } from "../../../../store/module/authentication/authentication.action";
 
 const drawerWidth = 240;
 interface AppBarProps extends MuiAppBarProps {
@@ -39,7 +42,10 @@ interface DrawerAppBarProps {
 
 export function DrawerAppBar({handleDrawer, title, open}: DrawerAppBarProps) {
 
-
+    const dispatch = useAppDispatch();
+const handleLogin = ()=> {
+    dispatch(login())
+}
 
     return (
         <AppBar position="fixed" open={open}>
@@ -56,6 +62,9 @@ export function DrawerAppBar({handleDrawer, title, open}: DrawerAppBarProps) {
                     {title}
                 </Typography>
                 <VideoModal/>
+                <IconButton onClick={handleLogin}>
+                    <AccountCircle/>
+                </IconButton>
             </Toolbar>
         </AppBar>
     );

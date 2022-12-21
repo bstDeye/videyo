@@ -12,6 +12,8 @@ import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {AddVideoButton} from "../AddVideoButton";
+import { login } from "../../../store/module/authentication/authentication.action";
+import { useAppDispatch } from "../../../store";
 
 interface NavBarProps {
     handleDrawerOpen: () => void;
@@ -21,6 +23,7 @@ interface NavBarProps {
 export function NavBar({handleDrawerOpen,handleDrawerClose, isOpen}: NavBarProps) {
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const dispatch = useAppDispatch();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAuth(event.target.checked);
@@ -33,6 +36,10 @@ export function NavBar({handleDrawerOpen,handleDrawerClose, isOpen}: NavBarProps
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLogin =()=> {
+        dispatch(login)
+    }
 
     return (
             <AppBar position={"fixed"}>
@@ -51,6 +58,9 @@ export function NavBar({handleDrawerOpen,handleDrawerClose, isOpen}: NavBarProps
                         Hebdrawmadaire
                     </Typography>
                     <AddVideoButton/>
+                    <IconButton onClick={handleLogin}>
+                        <AccountCircle/>
+                    </IconButton>
                 </Toolbar>
             </AppBar>
     );
