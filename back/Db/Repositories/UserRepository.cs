@@ -1,17 +1,17 @@
 ﻿using System.Net;
-using Example.Api.Abstractions.Exceptions;
-using Example.Api.Abstractions.Extensions;
-using Example.Api.Abstractions.Interfaces.Repositories;
-using Example.Api.Abstractions.Models;
-using Example.Api.Abstractions.Transports;
-using Example.Api.Abstractions.Transports.Playlist;
-using Example.Api.Db.Repositories.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Videyo.Api.Abstractions.Exceptions;
+using Videyo.Api.Abstractions.Extensions;
+using Videyo.Api.Abstractions.Interfaces.Repositories;
+using Videyo.Api.Abstractions.Models;
+using Videyo.Api.Abstractions.Transports;
+using Videyo.Api.Abstractions.Transports.Playlist;
+using Videyo.Api.Db.Repositories.Internal;
 
-namespace Example.Api.Db.Repositories;
+namespace Videyo.Api.Db.Repositories;
 
 public class UserRepository : BaseRepository<UserEntity>, IUserRepository
 {
@@ -26,7 +26,7 @@ public class UserRepository : BaseRepository<UserEntity>, IUserRepository
         var userPlaylists = playlists.Select(playlist => new UserPlaylist()
             { Author = user, Label = playlist.Label, NbVideo = 0, Type = playlist.Type, Id = playlist.Id }
         );
-        
+
         var update = Builders<UserEntity>.Update.PushEach(u => u.Playlists, userPlaylists);
 
         return await EntityCollection.FindOneAndUpdateAsync(u => u.Username == user, update);
@@ -46,13 +46,13 @@ public class UserRepository : BaseRepository<UserEntity>, IUserRepository
         }
 
 
-        catch(MongoWriteException e)
+        catch (MongoWriteException e)
         {
             if (e.WriteError.Category == ServerErrorCategory.DuplicateKey)
             {
-                throw new HttpException(HttpStatusCode.Conflict, $"Username {user} is already taken" ,e);
-
+                throw new HttpException(HttpStatusCode.Conflict, $"Username {user} is already taken", e);
             }
+
             throw;
         }
     }
@@ -94,5 +94,15 @@ public class UserRepository : BaseRepository<UserEntity>, IUserRepository
         //syntaxe mongoDb
         var update = Builders<UserEntity>.Update.PullFilter(u => u.Playlists, playlist => playlist.Id == idPlaylist);
         await EntityCollection.UpdateOneAsync(u => u.Id == idUser.AsObjectId(), update);
+    }
+
+    public Task<UserEntity?> Get(string username)
+    {
+        return EntityCollection.AsQueryable().Where(u => u.Username == username).FirstOrDefaultAsync();
+    }
+
+    public async Task<List<UserEntity>> GetUsers()
+    {
+        return await EntityCollection.AsQueryable().ToListAsync();
     }
 }

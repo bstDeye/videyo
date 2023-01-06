@@ -1,11 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getUserInfos, logout } from "./authentication.action";
-import { UserSettingsModel } from "../../../core/apis/authentication/generated";
+import { setUserFromToken } from "./authentication.action";
+import { Settings, User } from "../../../core/apis/authentication/generated";
+import { logout } from "./authentication.async.action";
 
 export interface AuthenticationState {
 	logged: boolean;
-	username?: string;
-	settings?: UserSettingsModel;
+	user?: User;
+	settings?: Settings;
 }
 
 const defaultState: AuthenticationState = {
@@ -13,15 +14,13 @@ const defaultState: AuthenticationState = {
 };
 
 export const authenticationReducer = createReducer(defaultState, (builder) => {
-	builder.addCase(getUserInfos.fulfilled, (state, action) => {
+	builder.addCase(setUserFromToken, (state, action) => {
 		state.logged = true;
-		state.username = action.payload.username;
-		state.settings = action.payload.settings;
+		state.user = action.payload;
 	});
 
 	builder.addCase(logout.fulfilled, (state) => {
 		state.logged = defaultState.logged;
-		state.username = defaultState.username;
-		state.settings = defaultState.settings;
+		state.user = undefined;
 	});
 });

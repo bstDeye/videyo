@@ -1,19 +1,18 @@
-﻿namespace Example.Api.Web.Utils
+﻿namespace Videyo.Api.Web.Utils;
+
+public class AuthUtility
 {
-	public class AuthUtility
+	public static readonly string UsernameField = "auth_username";
+
+	public static readonly string TokenField = "auth_token";
+
+	public static string GetUsername(HttpRequest request)
 	{
-		public static readonly string UsernameField = "auth_username";
+		return request.Headers[UsernameField].First();
+	}
 
-		public static readonly string TokenField = "auth_token";
-
-		public static string GetUsername(HttpRequest request)
-		{
-			return request.Headers[UsernameField].First();
-		}
-
-		public static string GetToken(HttpRequest request)
-		{
-			return request.Headers[TokenField].First();
-		}
+	public static string GetToken(HttpRequest request)
+	{
+		return request.Headers[TokenField].First();
 	}
 }

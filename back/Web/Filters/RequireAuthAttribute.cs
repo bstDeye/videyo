@@ -1,95 +1,68 @@
-﻿using Example.Api.Abstractions.Interfaces.Services;
-using Example.Api.Web.Utils;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NJsonSchema;
-using NSwag;
-using NSwag.Generation.Processors;
-using NSwag.Generation.Processors.Contexts;
+using Newtonsoft.Json;
+using Videyo.Api.Abstractions.Interfaces.Services;
+using Videyo.Api.Adapters.AuthenticationApi;
 
-namespace Example.Api.Web.Filters
+namespace Videyo.Api.Web.Filters;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class AuthorizeAttribute : Attribute, IAuthorizationFilter
 {
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-	public class RequireAuthAttribute : ActionFilterAttribute
-	{
-		private const string AuthenticationTokenField = "authentication-token";
+    private readonly VideyoRole _role;
 
 
-		public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-		{
-			var authenticationService = context.HttpContext.RequestServices.GetService<IAuthenticationService>();
+    public AuthorizeAttribute(VideyoRole role)
+    {
+        _role = role;
+    }
 
-			if (authenticationService == default)
-			{
-				context.Result = new StatusCodeResult(500);
-				throw new Exception("Dependency injection error, Authentication Service is not available");
-			}
+    /// <inheritdoc />
+    public void OnAuthorization(AuthorizationFilterContext context)
+    {
+        var svc = context.HttpContext.RequestServices;
+        var tokenService = svc.GetRequiredService<IAuthenticationService>();
 
-			var cookie = context.HttpContext.Request.Cookies[AuthenticationTokenField];
-			var header = context.HttpContext.Request.Headers[AuthenticationTokenField].FirstOrDefault();
-
-			var token = cookie ?? header;
-
-			if (token == default)
-			{
-				context.Result = new UnauthorizedObjectResult("Token not found");
-				return;
-			}
+        // skip authorization if action is decorated with [AllowAnonymous] attribute
+        var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+        if (allowAnonymous)
+            return;
 
 
-			if (!await authenticationService.IsLogged(token))
-			{
-				context.Result = new StatusCodeResult(403);
-				return;
-			}
+        var bearer = context.HttpContext.Request.Headers.Authorization.ToString();
 
-			var username = await authenticationService.GetUsername(token);
-			context.HttpContext.Request.Headers[AuthUtility.UsernameField] = username;
-			context.HttpContext.Request.Headers[AuthUtility.TokenField] = token;
-			await next();
-		}
-
-
-		public class Swagger : IOperationProcessor
-		{
-			public bool Process(OperationProcessorContext context)
-			{
-				// Get method attributes
-				var attributes = context.MethodInfo.CustomAttributes.ToList();
-
-				// Add class' attributes
-
-				if (attributes.All(attribute => attribute.AttributeType != typeof(RequireAuthAttribute))) return true;
+        if (!tokenService.ValidateJwt(bearer, out var token))
+        {
+            context.Result = new JsonResult(new
+            {
+                status = "Unauthorized"
+            })
+            {
+                StatusCode = StatusCodes.Status401Unauthorized
+            };
+            return;
+        }
 
 
-				context.OperationDescription.Operation.Parameters.Add(new OpenApiParameter
-					{
-						Name = AuthenticationTokenField,
-						Kind = OpenApiParameterKind.Header,
-						IsRequired = false,
-						AllowEmptyValue = true,
-						Description = "Authentication Token",
-						Schema = new JsonSchema
-							{Type = JsonObjectType.String}
-					}
-				);
+        var userStr = token!.Payload["data"].ToString()!;
 
-				context.OperationDescription.Operation.Parameters.Add(new OpenApiParameter
-					{
-						Name = AuthenticationTokenField,
-						Kind = OpenApiParameterKind.Cookie,
-						IsRequired = false,
-						AllowEmptyValue = true,
-						Description = "Authentication Token",
-						Schema = new JsonSchema
-							{Type = JsonObjectType.String}
-					}
-				);
+        var user = JsonConvert.DeserializeObject<User>(userStr);
 
-				context.OperationDescription.Operation.Responses.Add("401", new OpenApiResponse {Description = "Unauthorized"});
-				context.OperationDescription.Operation.Responses.Add("403", new OpenApiResponse {Description = "Forbidden"});
-				return true;
-			}
-		}
-	}
+        context.HttpContext.Items["user"] = user;
+
+        if (user.Authorizations.Videyo?.Roles.Contains(_role) != true)
+            context.Result = new JsonResult(new
+            {
+                status = "Forbidden",
+                missingRole = _role
+            })
+            {
+                StatusCode = StatusCodes.Status403Forbidden
+            };
+
+
+
+
+    }
 }

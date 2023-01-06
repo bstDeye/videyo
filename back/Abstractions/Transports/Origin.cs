@@ -1,4 +1,4 @@
-﻿namespace Example.Api.Abstractions.Transports;
+﻿namespace Videyo.Api.Abstractions.Transports;
 
 
 /**

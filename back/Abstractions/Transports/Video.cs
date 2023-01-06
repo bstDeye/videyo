@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Example.Api.Abstractions.Transports
+namespace Videyo.Api.Abstractions.Transports;
+
+public class Video : VideoBase
 {
-	public class Video : VideoBase
-	{
-		[Required] public required Guid Id { get; init; }
-	}
+	[Required] public required Guid Id { get; init; }
 }

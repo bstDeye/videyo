@@ -1,5 +1,7 @@
 import React from 'react';
 import {Box, Paper, Stack, Typography} from "@mui/material";
+import { Categories } from "./navigation/main/Categories";
+import { Video } from "./video/Video";
 
 export function MainPage() {
     return (
@@ -12,27 +14,11 @@ export function MainPage() {
             </Box>
             <Stack alignItems={"space-between"} height={"100%"}>
                 <Stack  direction={"row"} spacing={5} width={"100%"} height={"60%"} justifyContent={"center"} alignItems={"center"} textAlign={"center"}>
-                    <Paper>
-                        <Box p={10} >
-                            <Typography> Face </Typography>
-                        </Box>
-                    </Paper>
-                    <Paper>
-                        <Box p={10} >
-                            <Typography> Body </Typography>
-                        </Box>
-                    </Paper>
-                    <Paper>
-                        <Box p={10} >
-                            <Typography> Other </Typography>
-                        </Box>
-                    </Paper>
+                   <Categories/>
 
                 </Stack>
                 <Paper>
-                    <Box width={"50%"}>
-                        <Typography> Explore: Hebdrawmadaire</Typography>
-                    </Box>
+                   <Video/>
                 </Paper>
             </Stack>
 

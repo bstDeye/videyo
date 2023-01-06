@@ -1,6 +1,6 @@
 ﻿{
   "ProviderId": "Unchase.OpenAPI.ConnectedService",
-  "Version": "1.7.0.0",
+  "Version": "1.8.0.0",
   "GettingStartedDocument": {
     "Uri": "https://github.com/unchase/Unchase.OpenAPI.Connectedservice/"
   },
@@ -8,7 +8,7 @@
     "ServiceName": "AuthenticationApi",
     "AcceptAllUntrustedCertificates": true,
     "GeneratedFileName": "AuthenticationApi",
-    "Endpoint": "https://elyspio.fr/authentication/swagger/swagger.json",
+    "Endpoint": "http://localhost:4001/swagger/Authentication.Api/swagger.json",
     "GeneratedFileNamePrefix": null,
     "GenerateCSharpClient": true,
     "GenerateTypeScriptClient": false,
@@ -94,7 +94,6 @@
       "TypeNameGeneratorType": null,
       "PropertyNameGeneratorType": null,
       "EnumNameGeneratorType": null,
-      "ChecksumCacheEnabled": false,
       "ServiceHost": null,
       "ServiceSchemes": null,
       "output": "AuthenticationApi.cs",

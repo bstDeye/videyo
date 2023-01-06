@@ -1,14 +1,13 @@
-﻿using Example.Api.Abstractions.Transports;
-using Example.Api.Abstractions.Transports.Playlist;
+﻿using Videyo.Api.Abstractions.Transports;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Videyo.Api.Abstractions.Transports.Playlist;
 
-namespace Example.Api.Abstractions.Models
+namespace Videyo.Api.Abstractions.Models;
+
+public class PlaylistEntity : PlaylistBase
 {
-	public class PlaylistEntity : PlaylistBase
-	{
-		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
-		public ObjectId Id { get; init; }
-	}
+	[BsonId]
+	[BsonRepresentation(BsonType.ObjectId)]
+	public ObjectId Id { get; init; }
 }

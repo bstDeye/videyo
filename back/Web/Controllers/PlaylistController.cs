@@ -1,36 +1,47 @@
-﻿using Example.Api.Abstractions.Interfaces.Services;
-using Example.Api.Abstractions.Transports;
-using Example.Api.Web.Filters;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
-using System.Net;
-using Example.Api.Abstractions.Transports.Playlist;
+using Videyo.Api.Abstractions.Interfaces.Services;
+using Videyo.Api.Abstractions.Transports.Playlist;
+using Videyo.Api.Abstractions.Transports.Requests;
+using Videyo.Api.Adapters.AuthenticationApi;
+using Videyo.Api.Web.Filters;
 
-namespace Example.Api.Web.Controllers
+namespace Videyo.Api.Web.Controllers;
+
+[Route("api/playlist")]
+[ApiController]
+public class PlaylistController : ControllerBase
 {
-    [Route("api/playlist")]
-    [ApiController]
-    public class PlaylistController : ControllerBase
+    private readonly IPlaylistService _playlistService;
+    private readonly IVideoService _videoService;
+
+    public PlaylistController(IPlaylistService playlistService, IVideoService videoService)
     {
-        private readonly IPlaylistService _playlistService;
-
-        public PlaylistController(IPlaylistService playlistService)
-        {
-            this._playlistService = playlistService;
-        }
-
-        [HttpGet]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(List<Playlist>))]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await _playlistService.GetAll());
-        }
-
-        [HttpPost]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(Playlist))]
-        public async Task<IActionResult> Add([FromBody] PlaylistBase playlist)
-        {
-            return Ok(await _playlistService.Add(playlist));
-        }
+        this._playlistService = playlistService;
+        _videoService = videoService;
     }
+
+    [HttpGet]
+    [SwaggerResponse(HttpStatusCode.OK, typeof(List<Playlist>))]
+    public async Task<IActionResult> GetAllPlaylists()
+    {
+        return Ok(await _playlistService.GetAll());
+    }
+
+    [HttpPost]
+    [SwaggerResponse(HttpStatusCode.OK, typeof(Playlist))]
+    public async Task<IActionResult> AddPlaylist([FromBody] PlaylistBase playlist)
+    {
+        return Ok(await _playlistService.Create(playlist));
+    }
+    [HttpPost("{idPlaylist:guid}")]
+    [Authorize(VideyoRole.User)]
+    [SwaggerResponse(HttpStatusCode.NoContent, typeof(Playlist))]
+    public async Task<IActionResult> AddToPlaylist([FromBody]AddToPlaylistRequest rq, [FromRoute]Guid idPlaylist)
+    {
+        await _playlistService.Link(rq.IdUser, rq.IdVideo, idPlaylist );
+        return NoContent();
+    }
+    
 }

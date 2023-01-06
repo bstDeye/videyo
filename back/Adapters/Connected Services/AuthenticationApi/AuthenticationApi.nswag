@@ -3,7 +3,7 @@
   "defaultVariables": null,
   "documentGenerator": {
     "fromDocument": {
-      "url": "https://elyspio.fr/authentication/swagger/swagger.json",
+      "url": "http://localhost:4001/swagger/Authentication.Api/swagger.json",
       "output": "AuthenticationApi.nswag.json",
       "newLineBehavior": "Auto"
     }
@@ -90,7 +90,6 @@
       "typeNameGeneratorType": null,
       "propertyNameGeneratorType": null,
       "enumNameGeneratorType": null,
-      "checksumCacheEnabled": false,
       "serviceHost": null,
       "serviceSchemes": null,
       "output": "AuthenticationApi.cs",

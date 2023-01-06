@@ -1,13 +1,12 @@
-﻿using Example.Api.Abstractions.Transports;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Videyo.Api.Abstractions.Transports;
 
-namespace Example.Api.Abstractions.Models
+namespace Videyo.Api.Abstractions.Models;
+
+public class VideoEntity : VideoBase
 {
-	public class VideoEntity : VideoBase
-	{
-		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
-		public ObjectId Id { get; init; }
-	}
+	[BsonId]
+	[BsonRepresentation(BsonType.ObjectId)]
+	public ObjectId Id { get; init; }
 }

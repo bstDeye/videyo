@@ -1,5 +1,5 @@
 {
-	"runtime": "Net60",
+	"runtime": "Net70",
 	"defaultVariables": null,
 	"documentGenerator": {
 		"fromDocument": {
@@ -14,7 +14,7 @@
 			"moduleName": "",
 			"namespace": "",
 			"typeScriptVersion": 4.8,
-			"template": "Fetch",
+			"template": "Axios",
 			"promiseType": "Promise",
 			"httpClass": "HttpClient",
 			"withCredentials": true,

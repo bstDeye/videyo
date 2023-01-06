@@ -1,13 +1,12 @@
-﻿using Example.Api.Abstractions.Transports;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Videyo.Api.Abstractions.Transports;
 
-namespace Example.Api.Abstractions.Models
+namespace Videyo.Api.Abstractions.Models;
+
+public class UserEntity : UserBase
 {
-	public class UserEntity : UserBase
-	{
-		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
-		public ObjectId Id { get; init; }
-	}
+	[BsonId]
+	[BsonRepresentation(BsonType.ObjectId)]
+	public ObjectId Id { get; init; }
 }

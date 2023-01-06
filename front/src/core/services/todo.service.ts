@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { BackendApi } from "../apis/backend";
 import { TodoClient } from "../apis/backend/generated";
-import { BaseService } from "./base.service";
+import { BaseService } from "./common/technical/base.service";
 
 
 interface ITodoServiceSub {

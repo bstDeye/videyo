@@ -1,14 +1,14 @@
-﻿using Example.Api.Abstractions.Extensions;
-using Example.Api.Abstractions.Interfaces.Repositories;
-using Example.Api.Abstractions.Models;
-using Example.Api.Abstractions.Transports;
-using Example.Api.Db.Repositories.Internal;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Videyo.Api.Abstractions.Extensions;
+using Videyo.Api.Abstractions.Interfaces.Repositories;
+using Videyo.Api.Abstractions.Models;
+using Videyo.Api.Abstractions.Transports;
+using Videyo.Api.Db.Repositories.Internal;
 
-namespace Example.Api.Db.Repositories;
+namespace Videyo.Api.Db.Repositories;
 
 public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
 {
@@ -37,7 +37,7 @@ public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
 
     public async Task AddLike(Guid idVideo)
     {
-        var update = Builders<VideoEntity>.Update.Inc(video => video.NbLikes, -1);
+        var update = Builders<VideoEntity>.Update.Inc(video => video.NbLikes, +1);
         await EntityCollection.UpdateOneAsync(video => video.Id == idVideo.AsObjectId(), update);
     }
 

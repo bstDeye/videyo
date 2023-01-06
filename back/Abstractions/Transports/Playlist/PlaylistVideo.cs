@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace Example.Api.Abstractions.Transports;
+﻿namespace Videyo.Api.Abstractions.Transports.Playlist;
 
 public class PlaylistVideo
 {

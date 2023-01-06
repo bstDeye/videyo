@@ -1,4 +1,4 @@
-﻿namespace Example.Api.Abstractions.Transports.Playlist;
+﻿namespace Videyo.Api.Abstractions.Transports.Playlist;
 
 public class UserPlaylist
 {

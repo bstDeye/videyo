@@ -1,6 +1,6 @@
-import path from "path";
-import { readFileSync } from "fs";
-import { execSync } from "child_process";
+const path = require("path");
+const { readFileSync } = require("fs");
+const { execSync } = require("child_process");
 
 type NSwagConf = {
 	//  Fichier de configuration nswag

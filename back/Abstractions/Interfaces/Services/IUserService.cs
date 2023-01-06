@@ -1,11 +1,11 @@
-﻿using Example.Api.Abstractions.Transports;
+﻿using Videyo.Api.Abstractions.Transports;
 
-namespace Example.Api.Abstractions.Interfaces.Services
+namespace Videyo.Api.Abstractions.Interfaces.Services;
+
+public interface IUserService
 {
-	public interface IUserService
-	{
-		Task<User> Add(string user);
+	Task<User> Add(string user);
 		
-		
-	}
+	Task<List<User>> GetUsers();
+
 }

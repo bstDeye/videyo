@@ -4,12 +4,15 @@ import { themeReducer } from "./module/theme/theme.reducer";
 import { authenticationReducer } from "./module/authentication/authentication.reducer";
 import { container } from "../core/di";
 import { todoReducer } from "./module/todo/todo.reducer";
+import { userReducer } from "./module/user/user.reducer";
+import { videoReducer } from "./module/video/video.reducer";
 
 const store = configureStore({
 	reducer: {
 		theme: themeReducer,
 		authentication: authenticationReducer,
-		todo: todoReducer,
+		user: userReducer,
+		video: videoReducer,
 	},
 	devTools: process.env.NODE_ENV !== "production",
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: { extraArgument: { container } as ExtraArgument } }),

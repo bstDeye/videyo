@@ -1,24 +1,25 @@
-import { injectable } from "inversify";
-import { TodoClient, TodoUserClient } from "./generated";
+import { inject, injectable } from "inversify";
+import { PlaylistClient, UserClient, VideoClient } from "./generated";
+import { TokenService } from "../../services/common/auth/token.service";
+import axios from "axios";
 
-
-const fetch: (url: RequestInfo, init?: RequestInit) => Promise<Response> = (url, init) => {
-	return window.fetch(url, {
-		...init,
-		credentials: "include",
-	});
-};
 
 @injectable()
 export class BackendApi {
+	public video: VideoClient;
+	public user: UserClient;
+	public playlist: PlaylistClient;
 
+	constructor(@inject(TokenService) tokenService: TokenService) {
+		const instance = axios.create({ withCredentials: true, transformResponse: [] });
 
-	public readonly todo = {
-		common: new TodoClient(window.config.endpoints.core),
-		user: new TodoUserClient(window.config.endpoints.core),
-	};
+		instance.interceptors.request.use((value) => {
+			value.headers!["Authorization"] = `Bearer ${tokenService.getToken()}`;
+			return value;
+		});
 
-	// public readonly video = {
-	// 	common:
-	// }
+		this.video = new VideoClient(window.config.endpoints.core, instance);
+		this.user = new UserClient(window.config.endpoints.core, instance);
+		this.playlist = new PlaylistClient(window.config.endpoints.core, instance);
+	}
 }

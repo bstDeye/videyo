@@ -1,15 +1,14 @@
-﻿using Example.Api.Abstractions.Extensions;
-using Example.Api.Abstractions.Interfaces.Repositories;
-using Example.Api.Abstractions.Models;
-using Example.Api.Abstractions.Transports;
-using Example.Api.Abstractions.Transports.Playlist;
-using Example.Api.Db.Repositories.Internal;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Videyo.Api.Abstractions.Extensions;
+using Videyo.Api.Abstractions.Interfaces.Repositories;
+using Videyo.Api.Abstractions.Models;
+using Videyo.Api.Abstractions.Transports.Playlist;
+using Videyo.Api.Db.Repositories.Internal;
 
-namespace Example.Api.Db.Repositories;
+namespace Videyo.Api.Db.Repositories;
 
 public class PlaylistRepository :BaseRepository<PlaylistEntity>, IPlaylistRepository
 {
@@ -17,7 +16,7 @@ public class PlaylistRepository :BaseRepository<PlaylistEntity>, IPlaylistReposi
     public PlaylistRepository(IConfiguration configuration, ILogger<BaseRepository<PlaylistEntity>> logger) : base(configuration, logger)
     {
     }
-    public async Task<PlaylistEntity> Add(PlaylistBase playlist)
+    public async Task<PlaylistEntity> Create(PlaylistBase playlist)
     {
         var entity = new PlaylistEntity
         {
@@ -63,4 +62,8 @@ public class PlaylistRepository :BaseRepository<PlaylistEntity>, IPlaylistReposi
         await RemoveVideoFromPlaylist(playlist.Id.AsGuid(), idVideo);
     }
 
+    public async Task<bool> IsOwner(Guid idUser, Guid idPlaylist)
+    {
+        return await EntityCollection.AsQueryable().AnyAsync(p => p.Id == idPlaylist.AsObjectId() && p.User == idUser);
+    }
 }

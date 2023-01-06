@@ -1,5 +1,6 @@
 import {inject, injectable} from "inversify";
 import {BackendApi} from "../apis/backend";
+import { User, VideoBase } from "../apis/backend/generated";
 
 @injectable()
 export class VideoService {
@@ -7,7 +8,7 @@ export class VideoService {
     private backendApiClient!: BackendApi;
 
 
-    async getVideos(idUser: string) {
-        return await this.backendApiClient
+    async add (idUser: User["id"], video: VideoBase) {
+        await this.backendApiClient.video.addVideo(video, idUser);
     }
 }

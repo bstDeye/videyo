@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Example.Api.Abstractions.Transports;
+namespace Videyo.Api.Abstractions.Transports;
 
 public class User : UserBase
 {

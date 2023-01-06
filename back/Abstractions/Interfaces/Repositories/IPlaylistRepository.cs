@@ -1,16 +1,16 @@
-﻿using Example.Api.Abstractions.Models;
-using Example.Api.Abstractions.Transports.Playlist;
+﻿using Videyo.Api.Abstractions.Models;
+using Videyo.Api.Abstractions.Transports.Playlist;
 
-namespace Example.Api.Abstractions.Interfaces.Repositories
+namespace Videyo.Api.Abstractions.Interfaces.Repositories;
+
+public interface IPlaylistRepository
 {
-	public interface IPlaylistRepository
-	{
-		Task<PlaylistEntity> Add(PlaylistBase playlist);
-		Task<List<PlaylistEntity>> GetAll();
-		Task AddVideoToPlayList(Guid idPlaylist, Guid idVideo);
-		Task AddVideoToLiked(Guid idUser, Guid idVideo);
-		Task RemoveVideoFromPlaylist(Guid idPlaylist, Guid idVideo);
-		Task RemoveVideoFromLiked(Guid idUser, Guid idVideo);
+	Task<PlaylistEntity> Create(PlaylistBase playlist);
+	Task<List<PlaylistEntity>> GetAll();
+	Task AddVideoToPlayList(Guid idPlaylist, Guid idVideo);
+	Task AddVideoToLiked(Guid idUser, Guid idVideo);
+	Task RemoveVideoFromPlaylist(Guid idPlaylist, Guid idVideo);
+	Task RemoveVideoFromLiked(Guid idUser, Guid idVideo);
 
-	}
+	Task<bool> IsOwner(Guid idUser, Guid idPlaylist);
 }
