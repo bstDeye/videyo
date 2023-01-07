@@ -35,13 +35,13 @@ public class PlaylistController : ControllerBase
     {
         return Ok(await _playlistService.Create(playlist));
     }
+
     [HttpPost("{idPlaylist:guid}")]
     [Authorize(VideyoRole.User)]
     [SwaggerResponse(HttpStatusCode.NoContent, typeof(Playlist))]
-    public async Task<IActionResult> AddToPlaylist([FromBody]AddToPlaylistRequest rq, [FromRoute]Guid idPlaylist)
+    public async Task<IActionResult> AddToPlaylist([FromBody] AddToPlaylistRequest rq, [FromRoute] Guid idPlaylist)
     {
-        await _playlistService.Link(rq.IdUser, rq.IdVideo, idPlaylist );
+        await _playlistService.Link(rq.IdUser, rq.IdVideo, idPlaylist);
         return NoContent();
     }
-    
 }

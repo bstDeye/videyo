@@ -2,38 +2,38 @@
 
 public static class ApplicationServer
 {
-	public static WebApplication Initialize(this WebApplication application)
-	{
-		// Allow CORS
-		application.UseCors("Cors");
+    public static WebApplication Initialize(this WebApplication application)
+    {
+        // Allow CORS
+        application.UseCors("Cors");
 
-		application.UseOpenApi();
-		application.UseSwaggerUi3();
+        application.UseOpenApi();
+        application.UseSwaggerUi3();
 
-		// Start Dependency Injection
-		application.UseAdvancedDependencyInjection();
+        // Start Dependency Injection
+        application.UseAdvancedDependencyInjection();
 
-		// Setup Controllers
-		application.MapControllers();
+        // Setup Controllers
+        application.MapControllers();
 
-		application.UseAuthentication();
+        application.UseAuthentication();
 
-		// Start SPA serving
-		if (application.Environment.IsProduction())
-		{
-			application.UseRouting();
+        // Start SPA serving
+        if (application.Environment.IsProduction())
+        {
+            application.UseRouting();
 
-			application.UseDefaultFiles(new DefaultFilesOptions
-				{
-					DefaultFileNames = new List<string> {"index.html"},
-					RedirectToAppendTrailingSlash = true
-				}
-			);
-			application.UseStaticFiles();
+            application.UseDefaultFiles(new DefaultFilesOptions
+                {
+                    DefaultFileNames = new List<string> { "index.html" },
+                    RedirectToAppendTrailingSlash = true
+                }
+            );
+            application.UseStaticFiles();
 
-			application.UseEndpoints(endpoints => { endpoints.MapFallbackToFile("/index.html"); });
-		}
+            application.UseEndpoints(endpoints => { endpoints.MapFallbackToFile("/index.html"); });
+        }
 
-		return application;
-	}
+        return application;
+    }
 }

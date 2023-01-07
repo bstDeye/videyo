@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "../../../core/apis/backend/generated";
+import { User, Video } from "../../../core/apis/backend/generated";
+import { getVideos } from "./video.async.actions";
 
 export type UserState = {
-	all: Record<User["username"], User>
+	all: Record<Video["id"], Video>
 
 };
 
@@ -11,10 +12,15 @@ const initialState: UserState = {
 };
 
 const slice = createSlice({
-	name: "user",
+	name: "videos",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
+		builder.addCase(getVideos.fulfilled, (state, action) => {
+			for (const video of action.payload) {
+				state.all[video.id] = video;
+			}
+		});
 
 	},
 });

@@ -22,7 +22,8 @@ public static class Log
     }
 
 
-    public static LoggerInstance<T> Enter<T>(this ILogger<T> logger, string arguments = "", LogLevel level = LogLevel.Debug, [CallerMemberName] string method = "")
+    public static LoggerInstance<T> Enter<T>(this ILogger<T> logger, string arguments = "", LogLevel level = LogLevel.Debug,
+        [CallerMemberName] string method = "")
     {
         var loggerInstance = new LoggerInstance<T>(logger, method, arguments, level);
 

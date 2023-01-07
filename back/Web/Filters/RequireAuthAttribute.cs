@@ -60,9 +60,5 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
             {
                 StatusCode = StatusCodes.Status403Forbidden
             };
-
-
-
-
     }
 }

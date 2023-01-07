@@ -6,7 +6,7 @@ namespace Videyo.Api.Abstractions.Models;
 
 public class VideoEntity : VideoBase
 {
-	[BsonId]
-	[BsonRepresentation(BsonType.ObjectId)]
-	public ObjectId Id { get; init; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId Id { get; init; }
 }

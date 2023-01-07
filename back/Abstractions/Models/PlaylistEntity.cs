@@ -7,7 +7,7 @@ namespace Videyo.Api.Abstractions.Models;
 
 public class PlaylistEntity : PlaylistBase
 {
-	[BsonId]
-	[BsonRepresentation(BsonType.ObjectId)]
-	public ObjectId Id { get; init; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId Id { get; init; }
 }

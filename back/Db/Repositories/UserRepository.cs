@@ -9,6 +9,7 @@ using Videyo.Api.Abstractions.Interfaces.Repositories;
 using Videyo.Api.Abstractions.Models;
 using Videyo.Api.Abstractions.Transports;
 using Videyo.Api.Abstractions.Transports.Playlist;
+using Videyo.Api.Abstractions.Transports.User;
 using Videyo.Api.Db.Repositories.Internal;
 
 namespace Videyo.Api.Db.Repositories;
@@ -24,7 +25,13 @@ public class UserRepository : BaseRepository<UserEntity>, IUserRepository
     {
         var playlists = new List<Playlist>() { created, liked };
         var userPlaylists = playlists.Select(playlist => new UserPlaylist()
-            { Author = user, Label = playlist.Label, NbVideo = 0, Type = playlist.Type, Id = playlist.Id }
+            {
+                Author = user,
+                Label = playlist.Label,
+                Type = playlist.Type,
+                Id = playlist.Id,
+                Videos = new List<UserPlaylistVideo>()
+            }
         );
 
         var update = Builders<UserEntity>.Update.PushEach(u => u.Playlists, userPlaylists);
@@ -57,32 +64,40 @@ public class UserRepository : BaseRepository<UserEntity>, IUserRepository
         }
     }
 
-    public async Task Like(Guid idUser)
+    public async Task Like(Guid idUser, VideoEntity video)
     {
         var user = await EntityCollection.AsQueryable().Where(user => user.Id == idUser.AsObjectId()).FirstOrDefaultAsync();
-        var playlist = user.Playlists.Find(playlist => playlist.Type == PlaylistType.Liked);
-        playlist.NbVideo += 1;
+        var playlist = user.Playlists.Find(playlist => playlist.Type == PlaylistType.Liked)!;
+        playlist.Videos.Add(new UserPlaylistVideo
+        {
+            Id = video.Id.AsGuid(),
+            Label = video.Label
+        });
         await EntityCollection.ReplaceOneAsync(v => v.Id == user.Id, user);
     }
 
-    public async Task DisLike(Guid idUser)
+    public async Task DisLike(Guid idUser, VideoEntity video)
     {
         var user = await EntityCollection.AsQueryable().Where(user => user.Id == idUser.AsObjectId()).FirstOrDefaultAsync();
-        var playlist = user.Playlists.Find(playlist => playlist.Type == PlaylistType.Liked);
-        playlist.NbVideo -= 1;
+        var playlist = user.Playlists.Find(playlist => playlist.Type == PlaylistType.Liked)!;
+        playlist.Videos = playlist.Videos.Where(v => v.Id == video.Id.AsGuid()).ToList();
         await EntityCollection.ReplaceOneAsync(v => v.Id == user.Id, user);
     }
 
     public async Task FollowPlaylist(Guid idUser, Playlist playlist)
     {
-        var author = await EntityCollection.AsQueryable().FirstOrDefaultAsync(u => u.Id == playlist.User.AsObjectId());
+        var author = await EntityCollection.AsQueryable().FirstOrDefaultAsync(u => u.Id == playlist.User.Id.AsObjectId());
         var userPlaylist = new UserPlaylist
         {
             Id = playlist.Id,
             Label = playlist.Label,
             Author = author.Username,
-            NbVideo = playlist.IdVideos.Count,
-            Type = PlaylistType.Custom
+            Type = PlaylistType.Custom,
+            Videos = playlist.Videos.Select( plv => new UserPlaylistVideo()
+            {
+                Id = plv.Id,
+                Label = plv.Label
+            }).ToList()
         };
 
         var update = Builders<UserEntity>.Update.Push(u => u.Playlists, userPlaylist);

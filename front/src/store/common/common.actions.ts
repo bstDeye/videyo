@@ -3,10 +3,13 @@ import { silentLogin } from "../module/authentication/authentication.async.actio
 import { ExtraArgument } from "../index";
 import { AuthenticationEvents } from "../../core/services/common/auth/authentication.service";
 import { createUnknownUser, getUsers } from "../module/user/user.async.actions";
+import { getVideos } from "../module/video/video.async.actions";
 
 export const initApp = createAsyncThunk("initApp", (_, { dispatch }) => {
 	dispatch(getUsers());
+	dispatch(getVideos());
 	dispatch(silentLogin());
+	// Equivalent de "when logged"
 	AuthenticationEvents.on("login", ()=> {
 		dispatch(createUnknownUser());
 	})

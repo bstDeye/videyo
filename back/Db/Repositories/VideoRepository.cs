@@ -10,11 +10,12 @@ using Videyo.Api.Db.Repositories.Internal;
 
 namespace Videyo.Api.Db.Repositories;
 
-public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
+public class VideoRepository : BaseRepository<VideoEntity>, IVideoRepository
 {
     public VideoRepository(IConfiguration configuration, ILogger<BaseRepository<VideoEntity>> logger) : base(configuration, logger)
     {
     }
+
     public async Task<VideoEntity> Add(VideoBase video, Guid idUser)
     {
         var entity = new VideoEntity
@@ -25,7 +26,7 @@ public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
             User = idUser,
             NbLikes = 0
         };
-        
+
         await EntityCollection.InsertOneAsync(entity);
         return entity;
     }
@@ -35,17 +36,22 @@ public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
         return await EntityCollection.AsQueryable().ToListAsync();
     }
 
-    public async Task AddLike(Guid idVideo)
+    public async Task<VideoEntity> AddLike(Guid idVideo)
     {
         var update = Builders<VideoEntity>.Update.Inc(video => video.NbLikes, +1);
-        await EntityCollection.UpdateOneAsync(video => video.Id == idVideo.AsObjectId(), update);
+        return await EntityCollection.FindOneAndUpdateAsync(video => video.Id == idVideo.AsObjectId(), update, new()
+        {
+            ReturnDocument = ReturnDocument.After
+        });
     }
 
-    public async Task Removelike(Guid idVideo)
+    public async Task<VideoEntity> Removelike(Guid idVideo)
     {
-        var video = await EntityCollection.AsQueryable().Where(video => video.Id == idVideo.AsObjectId()).FirstOrDefaultAsync();
-        video.NbLikes -= 1;
-        await EntityCollection.ReplaceOneAsync(v => v.Id == video.Id, video);
+        var update = Builders<VideoEntity>.Update.Inc(video => video.NbLikes, -1);
+        return await EntityCollection.FindOneAndUpdateAsync(video => video.Id == idVideo.AsObjectId(), update, new()
+        {
+            ReturnDocument = ReturnDocument.After
+        });
     }
 
     public async Task AddComment(Guid idVideo, string content, string userId, Guid answeredTo = default)
@@ -57,10 +63,9 @@ public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
             Text = content,
             User = userId
         };
-        
+
         var update = Builders<VideoEntity>.Update.Push(video => video.Comments, comment);
         await EntityCollection.UpdateOneAsync(video => video.Id == idVideo.AsObjectId(), update);
-        
     }
 
     public async Task RemoveComment(Guid idVideo, Guid idComment)
@@ -75,6 +80,10 @@ public class VideoRepository : BaseRepository<VideoEntity>,IVideoRepository
         var comment = video.Comments.Find(c => c.Id == idComment);
         comment.Text = content;
         await EntityCollection.ReplaceOneAsync(v => v.Id == video.Id, video);
+    }
 
+    public async Task<VideoEntity> Get(Guid idVideo)
+    {
+        return await EntityCollection.AsQueryable().FirstOrDefaultAsync(v => v.Id == idVideo.AsObjectId());
     }
 }

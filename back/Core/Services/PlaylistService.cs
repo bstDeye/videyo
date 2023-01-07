@@ -15,11 +15,13 @@ public class PlaylistService : IPlaylistService
 	private readonly ILogger<PlaylistService> _logger;
 	private readonly PlaylistAssembler _playlistAssembler = new();
 	private readonly IPlaylistRepository _playlistRepository;
+	private readonly IVideoRepository _videoRepository;
 
-	public PlaylistService(IPlaylistRepository playlistRepository, ILogger<PlaylistService> logger)
+	public PlaylistService(IPlaylistRepository playlistRepository, ILogger<PlaylistService> logger, IVideoRepository videoRepository)
 	{
 		this._playlistRepository = playlistRepository;
 		this._logger = logger;
+		_videoRepository = videoRepository;
 	}
 
 
@@ -44,8 +46,8 @@ public class PlaylistService : IPlaylistService
 		var isOwner = await _playlistRepository.IsOwner(idUser, idPlaylist);
 
 		if (!isOwner) throw new HttpException(HttpStatusCode.Forbidden, "Vous ne pouvez pas modifier cette playlist");
-
-		await _playlistRepository.AddVideoToPlayList(idPlaylist, idVideo);
+		var video = await _videoRepository.Get(idVideo);
+		await _playlistRepository.AddVideoToPlayList(idPlaylist, video);
 		
 		logger.Exit();
 

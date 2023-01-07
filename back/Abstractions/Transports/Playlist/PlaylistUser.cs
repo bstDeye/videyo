@@ -1,8 +1,8 @@
 ﻿namespace Videyo.Api.Abstractions.Transports.Playlist;
 
-public class PlaylistVideo
+public class PlaylistUser
 {
     public required Guid Id { get; set; }
 
-    public required string Label { get; set; }
+    public required string Username { get; set; }
 }

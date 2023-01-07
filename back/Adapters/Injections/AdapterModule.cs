@@ -8,11 +8,11 @@ namespace Videyo.Api.Adapters.Injections;
 
 public class AdapterModule : IDotnetModule
 {
-	public void Load(IServiceCollection services, IConfiguration configuration)
-	{
-		var conf = new EndpointConfig();
-		configuration.GetSection(EndpointConfig.Section).Bind(conf);
+    public void Load(IServiceCollection services, IConfiguration configuration)
+    {
+        var conf = new EndpointConfig();
+        configuration.GetSection(EndpointConfig.Section).Bind(conf);
 
-		services.AddHttpClient<IAuthenticationClient, AuthenticationClient>(client => { client.BaseAddress = new Uri(conf.Authentication); });
-	}
+        services.AddHttpClient<IAuthenticationClient, AuthenticationClient>(client => { client.BaseAddress = new Uri(conf.Authentication); });
+    }
 }

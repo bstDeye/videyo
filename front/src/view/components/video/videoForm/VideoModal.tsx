@@ -86,6 +86,7 @@ export function VideoModal({}: VideoFormProps) {
 			user: "271faf63-37f0-f12a-50e3-1ebb05050505"
 
 		}));
+		handleClose();
 	}
 
 	return (

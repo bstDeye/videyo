@@ -2,7 +2,7 @@
 
 namespace Videyo.Api.Abstractions.Exceptions;
 
-public class HttpException: Exception
+public class HttpException : Exception
 {
     public HttpStatusCode Code { get; }
 

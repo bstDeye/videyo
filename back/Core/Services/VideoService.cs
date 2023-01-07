@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Videyo.Api.Abstractions.Extensions;
 using Videyo.Api.Abstractions.Interfaces.Repositories;
 using Videyo.Api.Abstractions.Interfaces.Services;
 using Videyo.Api.Abstractions.Transports;
@@ -27,6 +28,8 @@ public class VideoService : IVideoService
 	public async Task<Video> Add(VideoBase video, Guid idUser)
 	{
 		var entity = await _videoRepository.Add(video, idUser);
+		await _playlistRepository.AddVideoToCreated(idUser, entity);
+		
 		return _videoAssembler.Convert(entity);
 	}
 		
@@ -38,21 +41,23 @@ public class VideoService : IVideoService
 
 	public async Task AddLike(Guid idVideo, Guid idUser)
 	{
-		await _videoRepository.AddLike(idVideo);
-		await _userRepository.Like(idUser);
-		await _playlistRepository.AddVideoToLiked(idUser, idVideo);
+		
+		var video = await _videoRepository.AddLike(idVideo);
+		await _userRepository.Like(idUser, video);
+		await _playlistRepository.AddVideoToLiked(idUser, video);
 	}
 
 	public async Task Removelike(Guid idVideo, Guid idUser)
 	{
-		await _videoRepository.Removelike(idVideo);
-		await _userRepository.DisLike(idUser);
+		var video = await _videoRepository.Removelike(idVideo);
+		await _userRepository.DisLike(idUser, video);
 		await _playlistRepository.RemoveVideoFromLiked(idUser, idVideo);
 	}
 
 	public async Task AddToPlayList(Guid idVideo, Guid idPlaylist)
 	{
-		await _playlistRepository.AddVideoToPlayList(idPlaylist, idVideo);
+		var video = await _videoRepository.Get(idVideo);
+		await _playlistRepository.AddVideoToPlayList(idPlaylist, video);
 	}
 
 	public async Task RemoveFromPlaylist(Guid idVideo, Guid idPlaylist, Guid idUser)

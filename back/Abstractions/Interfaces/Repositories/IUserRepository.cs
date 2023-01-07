@@ -10,8 +10,8 @@ public interface IUserRepository
     Task<UserEntity> InitDefaultPlaylist(string user, Playlist created, Playlist liked);
         
     Task<UserEntity> Add(string user);
-    Task Like(Guid user);
-    Task DisLike(Guid idUser);
+    Task Like(Guid idUser, VideoEntity video);
+    Task DisLike(Guid idUser, VideoEntity video);
     Task FollowPlaylist(Guid idUser, Playlist playlist);
     Task UnFollowPlaylist(Guid idUser, Guid idPlaylist);
     Task<UserEntity?> Get(string username);

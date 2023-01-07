@@ -11,4 +11,8 @@ export class VideoService {
     async add (idUser: User["id"], video: VideoBase) {
         await this.backendApiClient.video.addVideo(video, idUser);
     }
+
+	async getVideos() {
+		return await this.backendApiClient.video.getAllVideos();
+	}
 }

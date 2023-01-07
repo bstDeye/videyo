@@ -8,56 +8,56 @@ namespace Videyo.Api.Core.Services;
 
 internal class AuthenticationService : IAuthenticationService
 {
-	private readonly IAuthenticationClient _authenticationApi;
-	private readonly SecurityKey _publicKey;
+    private readonly IAuthenticationClient _authenticationApi;
+    private readonly SecurityKey _publicKey;
 
-	public AuthenticationService(IAuthenticationClient authenticationApi)
-	{
-		_authenticationApi = authenticationApi;
-		_publicKey = GetPublicKey().Result;
-	}
-
-
-	public bool ValidateJwt(string? token, out JwtSecurityToken? validatedToken)
-	{
-		validatedToken = null;
-
-		if (string.IsNullOrWhiteSpace(token))
-			return false;
+    public AuthenticationService(IAuthenticationClient authenticationApi)
+    {
+        _authenticationApi = authenticationApi;
+        _publicKey = GetPublicKey().Result;
+    }
 
 
-		token = token[("Bearer".Length + 1)..];
+    public bool ValidateJwt(string? token, out JwtSecurityToken? validatedToken)
+    {
+        validatedToken = null;
 
-		var tokenHandler = new JwtSecurityTokenHandler();
+        if (string.IsNullOrWhiteSpace(token))
+            return false;
 
-		try
-		{
-			tokenHandler.ValidateToken(token, new()
-			{
-				ValidateIssuerSigningKey = true,
-				IssuerSigningKey = _publicKey,
-				ValidateIssuer = false,
-				ValidateAudience = false,
-				ClockSkew = TimeSpan.Zero
-			}, out var securityToken);
 
-			validatedToken = (JwtSecurityToken?) securityToken;
+        token = token[("Bearer".Length + 1)..];
 
-			return true;
-		}
-		catch
-		{
-			return false;
-		}
-	}
+        var tokenHandler = new JwtSecurityTokenHandler();
 
-	private async Task<SecurityKey> GetPublicKey()
-	{
-		var key = (await _authenticationApi.GetValidationKeyAsync()).Data;
-		var rsa = RSA.Create();
+        try
+        {
+            tokenHandler.ValidateToken(token, new()
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _publicKey,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            }, out var securityToken);
 
-		rsa.ImportFromPem(key);
+            validatedToken = (JwtSecurityToken?)securityToken;
 
-		return new RsaSecurityKey(rsa);
-	}
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private async Task<SecurityKey> GetPublicKey()
+    {
+        var key = (await _authenticationApi.GetValidationKeyAsync()).Data;
+        var rsa = RSA.Create();
+
+        rsa.ImportFromPem(key);
+
+        return new RsaSecurityKey(rsa);
+    }
 }
